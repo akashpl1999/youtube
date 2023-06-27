@@ -4,6 +4,8 @@ import cors from 'cors';
 import Userroutes  from './Routes/User.js'
 import Videoroutes from './Routes/Video.js'
 import Commentsroutes from './Routes/Comment.js'
+import Authroutes from './Routes/Auth.js'
+import cookieParser from "cookie-parser";
 const port = 9000;
 const app = express()
 
@@ -13,13 +15,13 @@ const app = express()
 const connected = async () => {
 
     try {
-        await mongoose.connect("mongodb://localhost:27017/Youtube", { useNewUrlparser: true, useUnifiedTopology: true })
 
+        await mongoose.connect("mongodb://localhost:27017/Youtube", { useNewUrlparser: true, useUnifiedTopology: true })
         console.log('connected')
 
     } catch (err) {
-
         console.log(err)
+
     }
 }
 
@@ -29,11 +31,11 @@ connected()
 app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
-
-
+app.use(cookieParser())
 
 
 app.use('/user', Userroutes)
+app.use('/auth', Authroutes)
 app.use('/comment' ,Commentsroutes)
 app.use('/video', Videoroutes)
 
@@ -47,13 +49,6 @@ app.use((err,req, res, next)=>{
      return res.status(status).json({success: false, status,message })
 
 })
-
-
-
-
-
-
-
 
 
 
