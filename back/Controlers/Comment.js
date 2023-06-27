@@ -6,10 +6,8 @@ import Commets from "../Models/Commets.js";
 
 
  export const addcomment=async(req, res, next)=>{
-
-
+   
     try {
-
          const newcommets=  new Commets({...req.body , userId:req.user.id})
 
          const savedcommets= await newcommets.save()
